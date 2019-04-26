@@ -8,7 +8,7 @@ namespace ic {
 
 std::string calcAddition(std::vector<std::string>& argValue);
 
-std::string calcSubtraction(std::vector<std::string>& argValue);
+std::string calcSubtraction(std::string argValue1, std::string argValue2);
 
 std::string calcMultiplication(std::string argValue1, std::string argValue2);
 

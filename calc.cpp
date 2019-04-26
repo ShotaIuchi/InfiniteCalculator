@@ -31,9 +31,63 @@ std::string calcAddition(std::vector<std::string>& argValue)
     return rstring(vec2str(anser));
 }
 
-std::string calcSubtraction(std::vector<std::string>& argValue) {
-    std::string x;
-    return x;
+std::string calcSubtraction(std::string argValue1, std::string argValue2) {
+    std::vector<int> bvalue1 = str2vec(rstring(argValue1));
+    std::vector<int> bvalue2 = str2vec(rstring(argValue2));
+    std::vector<int> value1, value2;
+    // value1 >= value2
+    if (largeLeft(bvalue1, bvalue2)) {
+        value1 = bvalue1;
+        value2 = bvalue2;
+    } else {
+        value1 = bvalue2;
+        value2 = bvalue1;
+    }
+    // calc
+    std::vector<int> anser;
+    int moveDown = 0;
+    for (int i=0;; ++i) {
+        bool isFix = true;
+        int sub = 0;
+        if (i < value1.size()) {
+            isFix = false;
+            sub = value1[i];
+            if (i < value2.size()) {
+                sub -= value2[i];
+            }
+            sub -= moveDown;
+        }
+
+        if (sub < 0) {
+            moveDown = 1;
+            sub += 10;
+            anser.push_back(sub);
+        } else {
+            if (isFix) {
+                if (sub != 0 || anser.empty()) {
+                    anser.push_back(sub);
+                }
+                break;
+            }
+            anser.push_back(sub);
+        }
+    }
+
+    // 頭の0削除
+    // 1の位は必要なので削除しない
+    for (int i=anser.size()-1; i>=1; --i) {
+        if (anser[i] == 0) {
+            anser.pop_back();
+        } else {
+            break;
+        }
+    }
+
+    if (largeLeft(bvalue1, bvalue2)) {
+        return rstring(vec2str(anser));
+    } else {
+        return "-" + rstring(vec2str(anser));
+    }
 }
 
 std::string calcMultiplication(std::string argValue1, std::string argValue2) {

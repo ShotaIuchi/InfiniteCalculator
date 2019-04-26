@@ -24,7 +24,8 @@ int main(int argc, char**argv) {
     std::vector<std::string> ssrc;
     ssrc.push_back(src);
     ssrc.push_back(src);
-    std::string rrr = ic::calcMultiplication(srcs[0], srcs[1]);
+    //std::string rrr = ic::calcMultiplication(srcs[0], srcs[1]);
+    std::string rrr = ic::calcSubtraction(srcs[0], srcs[1]);
     std::cout << rrr << std::endl;
     return 0;
 }
