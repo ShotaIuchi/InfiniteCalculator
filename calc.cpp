@@ -47,29 +47,24 @@ std::string calcSubtraction(std::string argValue1, std::string argValue2) {
     std::vector<int> anser;
     int moveDown = 0;
     for (int i=0;; ++i) {
-        bool isFix = true;
-        int sub = 0;
-        if (i < value1.size()) {
-            isFix = false;
-            sub = value1[i];
-            if (i < value2.size()) {
-                sub -= value2[i];
-            }
-            sub -= moveDown;
-        }
-
-        if (sub < 0) {
-            moveDown = 1;
-            sub += 10;
-            anser.push_back(sub);
+        if (i >= value1.size()) {
+            // (value1>=value2)より繰り下がり考慮不要
+            break;
         } else {
-            if (isFix) {
-                if (sub != 0 || anser.empty()) {
-                    anser.push_back(sub);
-                }
-                break;
+            // 減算
+            int value = value1[i] - moveDown;
+            if (i < value2.size()) {
+                value -= value2[i];
             }
-            anser.push_back(sub);
+
+            // 繰り下がり考慮
+            moveDown = 0;
+            if (value < 0) {
+                moveDown = 1;
+                value += 10;
+            }
+
+            anser.push_back(value);
         }
     }
 
@@ -83,6 +78,7 @@ std::string calcSubtraction(std::string argValue1, std::string argValue2) {
         }
     }
 
+    // 負数考慮
     if (largeLeft(bvalue1, bvalue2)) {
         return rstring(vec2str(anser));
     } else {
